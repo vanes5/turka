@@ -14,6 +14,9 @@ export function Layout() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/termekek">Termékek</Nav.Link>
+              <Nav.Link href="/profil">Profil</Nav.Link>
+              <Nav.Link href="/kosar">Kosár</Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
         </Container>
