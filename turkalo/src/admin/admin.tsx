@@ -23,6 +23,7 @@ export function AdminPage() {
     )
 }
 
+
 import { getDatabase, ref, set } from "firebase/database";
 
 function writeData(name:string, desc:string, price:number, imageUrl:string, id:number) {
@@ -30,6 +31,7 @@ function writeData(name:string, desc:string, price:number, imageUrl:string, id:n
   set(ref(db, 'clothes/' + id), {
     name: name,
     description: desc,
+    price: price,
     image : imageUrl
     
   });
@@ -43,3 +45,21 @@ const storage = getStorage();
 import {app} from '../firebase';
 
 console.log(app);
+
+
+import { uploadBytes, getDownloadURL } from "firebase/storage";
+
+function submitForm() {
+    const form = document.querySelector('form');
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = (form.querySelector('input[name="name"]') as HTMLInputElement).value;
+        const desc = (form.querySelector('input[name="desc"]') as HTMLInputElement).value;
+        const price = (form.querySelector('input[name="price"]') as HTMLInputElement).value;
+        const file = (form.querySelector('input[name="file"]') as HTMLInputElement).files?.[0];
+        const id = Math.random();
+        
+        writeData(name, desc, parseInt(price), '', id);
+    });
+
+}
