@@ -21,9 +21,8 @@ function App() {
           <Route path='termekek' element={<Products/>}></Route>
           <Route path='profil' element={<Profile/>}></Route>
           <Route path='kosar' element={<Checkout/>}></Route>
-          {/* <Route path="termekek" element={<Elozmenyek />} /> */}
           <Route path="*" element={<NoPage />} />
-        </Route>  
+        </Route>
         <Route path="admin" element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
