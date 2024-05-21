@@ -17,7 +17,7 @@ export function AdminPage() {
                     <input type="number" name="price" />
                 </label>
                 <input type="file" name="file" />
-                <button type="submit">upload</button>
+                <button type="submit" onClick={submitForm}>upload</button>
             </form>
         </div>
     )
@@ -28,7 +28,7 @@ import { getDatabase, ref, set } from "firebase/database";
 
 function writeData(name:string, desc:string, price:number, imageUrl:string, id:number) {
   const db = getDatabase();
-  set(ref(db, 'clothes/' + id), {
+  set(ref(db,'clothes/'+id), {
     name: name,
     description: desc,
     price: price,
@@ -43,8 +43,7 @@ import { getStorage} from "firebase/storage";
 const storage = getStorage();
 
 import {app} from '../firebase';
-
-console.log(app);
+console.log(app)
 
 
 import { uploadBytes, getDownloadURL } from "firebase/storage";
@@ -57,9 +56,10 @@ function submitForm() {
         const desc = (form.querySelector('input[name="desc"]') as HTMLInputElement).value;
         const price = (form.querySelector('input[name="price"]') as HTMLInputElement).value;
         const file = (form.querySelector('input[name="file"]') as HTMLInputElement).files?.[0];
-        const id = Math.random();
-        
-        writeData(name, desc, parseInt(price), '', id);
+        //id generalas, kep feltoltese a storageba, url kell meg koszi
+        const id = 3;
+        console.log("jo")
+        writeData(name, desc, parseInt(price), 'kesobb megoldani', id);
     });
 
 }
