@@ -49,7 +49,7 @@ console.log(app)
 import { uploadBytes, getDownloadURL } from "firebase/storage";
 import firebase from "firebase/compat/app";
 
-function getId() {
+function getId() {  
     var counterRef = firebase.database().ref('counter');
     return counterRef.transaction(function(currentId) {
       return currentId + 1;
