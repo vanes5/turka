@@ -26,7 +26,7 @@ export function AdminPage() {
 
 import { getDatabase, ref, set } from "firebase/database";
 
-function writeData(name:string, desc:string, price:number, imageUrl:string, id:number) {
+function writeData(name:string, desc:string, price:number, imageUrl:string, id:any) {
   const db = getDatabase();
   set(ref(db,'clothes/'+id), {
     name: name,
@@ -47,6 +47,22 @@ console.log(app)
 
 
 import { uploadBytes, getDownloadURL } from "firebase/storage";
+import firebase from "firebase/compat/app";
+
+function getId() {
+    var counterRef = firebase.database().ref('counter');
+    return counterRef.transaction(function(currentId) {
+      return currentId + 1;
+    });
+  }
+
+
+  //Call the asynchronous getID() function
+  getId().then(function(transactionResult) {
+    var newId = transactionResult.snapshot.val();
+    console.log(newId);
+    firebase.database().ref('clothes/').set({id: newId});
+  });
 
 function submitForm() {
     const form = document.querySelector('form');
@@ -57,8 +73,8 @@ function submitForm() {
         const price = (form.querySelector('input[name="price"]') as HTMLInputElement).value;
         const file = (form.querySelector('input[name="file"]') as HTMLInputElement).files?.[0];
         //id generalas, kep feltoltese a storageba, url kell meg koszi
-        const id = 3;
-        console.log("jo")
+        const id = getId();  
+        console.log(id)
         writeData(name, desc, parseInt(price), 'kesobb megoldani', id);
     });
 

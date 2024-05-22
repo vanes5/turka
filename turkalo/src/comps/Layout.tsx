@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 export function Layout() {
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="bg-body-tertiary ">
         <Container>
           <Navbar.Brand href="/home">Turkáló</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
