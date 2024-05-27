@@ -21,13 +21,13 @@ export function AdminPage() {
             </form>
 
 
-            <div id="products"></div>
+            <div id="torlosresz"></div>
         </div>
     )
 }
 
 
-import { getDatabase, ref, set, push} from "firebase/database";
+import { getDatabase, ref, set, push, onValue,child,remove, get} from "firebase/database";
 
 
 function writeData(name:string, desc:string, price:number, imageUrl:string) {
@@ -55,7 +55,7 @@ import firebase from "firebase/compat/app";
 
 
 
-import { getStorage, ref as sref, uploadBytes } from "firebase/storage";
+import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function uploadImage(file:any) {
 
@@ -73,7 +73,7 @@ const uploadTask = uploadBytes(storageRef, file, metadata);
 }
 
 
-function submitForm() {
+async function submitForm() {
     const form = document.querySelector('form');
     form?.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -96,9 +96,8 @@ function submitForm() {
         writeData(name, desc, parseInt(price), filename);
         console.log("beszaras");
     });
-
+    getProducts();
 }
-
 
 async function getProducts() {
   
@@ -125,13 +124,18 @@ async function getProducts() {
           <h5 class="card-title">${product.name}</h5>
           <p class="card-text">${product.desc}</p>
           <p class="card-text">${product.price} Ft</p>
-          <a href="#" class="btn btn-primary">Buy</a>
+          <a href="#" class="btn btn-primary" id="${key}">Törlés</a>
         </div>
       </div>
         `
-        document.getElementById('termek')?.appendChild(productDiv)
-  
-      }
+        document.getElementById('torlosresz')?.appendChild(productDiv)
+        document.getElementById(key)?.addEventListener('click', function() {
+          const db = getDatabase();
+          const clothesRef = ref(db, 'clothes');
+          remove(child(clothesRef, key));
+          window.location.reload();
+      })
+    }
     )}
   })  
   }
