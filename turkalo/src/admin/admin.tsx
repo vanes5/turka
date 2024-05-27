@@ -55,7 +55,7 @@ import firebase from "firebase/compat/app";
 
 
 
-import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref as sref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 function uploadImage(file:any) {
 
@@ -69,11 +69,42 @@ const metadata = {
 };
 
 // Upload the file and metadata
-const uploadTask = uploadBytes(storageRef, file, metadata);
+const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+// uploadTask.on("state_changed", function(snapshot) {
+//     let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+//   }), function() {
+//     window.location.reload();
+//   };
+
+uploadTask.on('state_changed', 
+  (snapshot) => {
+    // Observe state change events such as progress, pause, and resume
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case 'paused':
+        console.log('Upload is paused');
+        break;
+      case 'running':
+        console.log('Upload is running');
+        break;
+    }
+  }, 
+  (error) => {
+    // Handle unsuccessful uploads
+  }, 
+  () => {
+    // Handle successful uploads on complete
+    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    window.location.reload();
+  }
+);
 }
 
 
-async function submitForm() {
+function submitForm() {
     const form = document.querySelector('form');
     form?.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -96,12 +127,11 @@ async function submitForm() {
         writeData(name, desc, parseInt(price), filename);
         console.log("beszaras");
     });
-    getProducts();
 }
 
-async function getProducts() {
+function getProducts() {
   
-
+    
     const db = getDatabase();
     const clothesRef = ref(db, 'clothes');
     console.log(clothesRef)
