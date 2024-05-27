@@ -1,0 +1,33 @@
+#termek {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Rugalmas oszlopok */
+    gap: 20px; /* Térköz a kártyák között */
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Árnyék a kártya körül */
+    border-radius: 8px; /* Lekerekített sarkok */
+    overflow: hidden; /* Képek ne lógjanak ki */
+  }
+  
+  .card img {
+    width: 100%; /* Kép méretezése a kártya szélességéhez */
+    height: auto;
+  }
+  
+  .card-body {
+    padding: 16px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Gomb színének beállítása */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+  }
+  
