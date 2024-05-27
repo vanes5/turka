@@ -39,7 +39,6 @@ function writeData(name:string, desc:string, price:number, imageUrl:string) {
     });
 }
 
-import { getStorage} from "firebase/storage";
 
 // Create a root reference
 const storage = getStorage();
@@ -48,11 +47,27 @@ import {app} from '../firebase';
 console.log(app)
 
 
-import { uploadBytes, getDownloadURL } from "firebase/storage";
+
 import firebase from "firebase/compat/app";
 
 
 
+import { getStorage, ref as sref, uploadBytes } from "firebase/storage";
+
+function uploadImage(file:any) {
+
+const storage = getStorage();
+const storageRef = sref(storage, 'images/' + file.name);
+
+// Create file metadata including the content type
+/** @type {any} */
+const metadata = {
+  contentType: 'image',
+};
+
+// Upload the file and metadata
+const uploadTask = uploadBytes(storageRef, file, metadata);
+}
 
 
 function submitForm() {
@@ -63,8 +78,20 @@ function submitForm() {
         const desc = (form.querySelector('input[name="desc"]') as HTMLInputElement).value;
         const price = (form.querySelector('input[name="price"]') as HTMLInputElement).value;
         const file = (form.querySelector('input[name="file"]') as HTMLInputElement).files?.[0];
-        // kep feltoltese a storageba, url kell meg koszi
-        writeData(name, desc, parseInt(price), 'kesobb megoldani');
+
+        var filename = "";
+        if (file == undefined) {
+            console.log("nincs file de ez nem baj");
+            filename = "nofile.png";
+        }
+        else {
+            filename = file.name;
+            uploadImage(file);
+        }
+        
+      
+        writeData(name, desc, parseInt(price), filename);
+        console.log("beszaras");
     });
 
 }
