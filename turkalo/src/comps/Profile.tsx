@@ -1,57 +1,43 @@
-import { Container, Image, Row, Col } from 'react-bootstrap';
-import { MouseEventHandler, useState } from "react";
+import { auth , googleProvider} from "../firebase";
+import { createUserWithEmailAndPassword,signInWithPopup, signOut } from "firebase/auth";
+import { useState } from "react";
 
-
-function Login(props: { toggle: MouseEventHandler<HTMLButtonElement> | undefined; }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  function handleLogin(e: { preventDefault: () => void; }) {
-      e.preventDefault()
-      // Code to handle login goes here
-      props.toggle()
-  }
-
+export const Profile = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+    console.log(auth?.currentUser?.email);
+  const signIn = async () => {
+    try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err){
+      console.error(err);
+    }
+  };
+  const signInWithGoogle = async () => {
+    try {
+    await signInWithPopup(auth,googleProvider);
+    } catch (err){
+      console.error(err);
+    }
+  };
+  const logOut = async () => {
+    try {
+    await signOut(auth);
+    } catch (err){
+      console.error(err);
+    }
+  };
   return (
-      <div className="popup">
-          <div className="popup-inner">
-              <h2>Login</h2>
-              <form onSubmit={handleLogin}>
-                  <label>
-                      Username:
-                      <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-                  </label>
-                  <label>
-                      Password:
-                      <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-                  </label>
-                  <button type="submit">Login</button>
-              </form>
-              <button onClick={props.toggle}>Close</button>
-          </div>
-      </div>
-  )
-}
-
-
-export function Profile() {
-    const [seen, setSeen] = useState(false)
-    function togglePop () {
-      setSeen(!seen);
-    };
-
-    return (
-      <>
-      <Container>
-        <Row>
-
-          <div>
-              <button onClick={togglePop}>Login</button>
-              {seen ? <Login toggle={togglePop} /> : null}
-          </div>
-        </Row>
-        
-      </Container>
-      </>
-    )
-  }
+    <div>
+      <input placeholder="Email.." onChange={(e) => setEmail(e.target.value)} />
+      <input
+        type="password"
+        placeholder="Password.."
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={signIn}> Signin</button>
+      <button onClick={signInWithGoogle}> Signin with google</button>
+      <button onClick={logOut}> logOut</button>
+    </div>
+  );
+};
