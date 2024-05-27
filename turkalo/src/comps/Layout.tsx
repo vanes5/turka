@@ -17,7 +17,7 @@ export function Layout() {
             <Nav className="me-auto">
               <Nav.Link href="/termekek">Termékek</Nav.Link>
               <Nav.Link href="/profil">Profil</Nav.Link>
-              <Nav.Link href="/kosar"><Image src={checkout} className="navb"/></Nav.Link>
+
 
             </Nav>
           </Navbar.Collapse>
