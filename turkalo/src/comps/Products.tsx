@@ -47,7 +47,7 @@ async function getProducts() {
         <h5 class="card-title">${product.name}</h5>
         <p class="card-text">${product.desc}</p>
         <p class="card-text bold">${product.price} Ft</p>
-        <a href="#" class="btn btn-prim"><img src='${checkout}' class='buybtnico'></img>Kosárba</a>
+        <a href="#" class="btn btn-prim">Kosárba</a>
       </div>
     </div>
       `
