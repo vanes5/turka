@@ -1,6 +1,5 @@
 import { Container, Image, Row, Col } from 'react-bootstrap';
 import '../CSS/Produtcs.css';
-import checkout from '../img/checkout.png';
 
 export function Products() {
     return (
