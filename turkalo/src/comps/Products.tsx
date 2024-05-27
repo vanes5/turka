@@ -1,5 +1,6 @@
 import { Container, Image, Row, Col } from 'react-bootstrap';
 import '../CSS/Produtcs.css';
+import checkout from '../img/checkout.png';
 
 export function Products() {
     return (
@@ -39,13 +40,14 @@ async function getProducts() {
       
       const productDiv = document.createElement('div');
       productDiv.innerHTML = `
+      <br>
       <div class="card" style="width: 18rem;">
       <img src="${url}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">${product.name}</h5>
         <p class="card-text">${product.desc}</p>
-        <p class="card-text">${product.price} Ft</p>
-        <a href="#" class="btn btn-primary">Buy</a>
+        <p class="card-text bold">${product.price} Ft</p>
+        <a href="#" class="btn btn-prim"><img src='${checkout}' class='buybtnico'></img>Kosárba</a>
       </div>
     </div>
       `
